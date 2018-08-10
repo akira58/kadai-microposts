@@ -18,6 +18,8 @@
                 <li role="presentation" class="{{ Request::is('users/' . $user->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user->id]) }}">TimeLine <span class="badge">{{ $count_microposts }}</span></a></li>
                 <li role="presentation" class="{{ Request::is('users/*/followings') ? 'active' : '' }}"><a href="{{ route('users.followings', ['id' => $user->id]) }}">Followings <span class="badge">{{ $count_followings }}</span></a></li>
                 <li role="presentation" class="{{ Request::is('users/*/followers') ? 'active' : '' }}"><a href="{{ route('users.followers', ['id' => $user->id]) }}">Followers <span class="badge">{{ $count_followers }}</span></a></li>
+                <li role="presentation" class="{{ Request::is('users/*/favorings') ? 'active' : '' }}"><a href="{{ route('favorites.favorings', ['id' => $user->id]) }}">Favorings <span class="badge">{{ $count_favorings }}</span></a></li>
+                <li role="presentation" class="{{ Request::is('users/*/persons_favor') ? 'active' : '' }}"><a href="{{ route('favorites.persons_favor', ['id' => $user->id]) }}">persons_favor <span class="badge">{{ $count_persons_favor }}</span></a></li>
             </ul>
             </ul>
             @if (Auth::id() == $user->id)
@@ -31,6 +33,8 @@
             @if (count($microposts) > 0)
                 @include('microposts.microposts', ['microposts' => $microposts])
             @endif
+            
         </div>
+        
     </div>
 @endsection

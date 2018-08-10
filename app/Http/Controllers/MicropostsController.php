@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
 
+use App\User;
+use App\Micropost;
+
 class MicropostsController extends Controller
 {
     public function index()
@@ -19,11 +22,12 @@ class MicropostsController extends Controller
                 'user' => $user,
                 'microposts' => $microposts,
             ];
-            $data += $this->counts($user);
-            return view('users.show', $data);
-        }else{
-            return view('welcome');
-        }
+            /* $data += $this->counts($user);
+              return view('users.show', $data);
+            }else{
+           */
+            return view('welcome', $data);
+            }
     }
     
     public function store(Request $request)
@@ -46,5 +50,35 @@ class MicropostsController extends Controller
         }
         return redirect()->back();
     }
+    
+    public function favorings($id)
+    {
+        $user = User::find($id);
+        $favorings = $user->favorings()->paginate(10);
+
+        $data = [
+            'user' => $user,
+            'users' => $favorings,
+        ];
+
+        $data += $this->counts($user);
+
+        return view('microposts.favorings', $data);
+    }
+
+    public function persons_favor($id)
+    {
+        $user = User::find($id);
+        $persons_favor = $user->persons_favor()->paginate(10);
+
+        $data = [
+            'user' => $user,
+            'users' => $persons_favor,
+        ];
+
+        $data += $this->counts($user);
+
+        return view('microposts.persons_favor', $data);
+    }    
 }
 
